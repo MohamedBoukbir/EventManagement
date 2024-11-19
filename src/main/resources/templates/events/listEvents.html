@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{base.html}">
+<body>
+<div layout:fragment="content">
+<section>
+    <h2 class="my-4">All Events</h2>
+    <table class="table table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Location</th>
+            <th>Date</th>
+            <th>Type</th>
+            <th>Capacity</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="event : ${events}">
+            <td th:text="${event.title}">Event Title</td>
+            <td th:text="${event.description}">Event Description</td>
+            <td th:text="${event.location}">Event Location</td>
+            <td th:text="${event.date}">Event Date</td>
+            <td th:text="${event.type}">Event Type</td>
+            <td th:text="${event.capacity}">Capacity</td>
+            <td>
+                <a th:href="@{/Admin/event/edit(id=${event.id})}" class="btn btn-primary btn-sm">Edit</a>
+                <a th:href="@{/Admin/event/delete(id=${event.id})}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this event?');">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+</div>
+</body>
+</html>
