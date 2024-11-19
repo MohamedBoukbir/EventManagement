@@ -1,6 +1,8 @@
 package emp.event_management_platform.controller;
 
+import emp.event_management_platform.entities.AppUser;
 import emp.event_management_platform.entities.Event;
+import emp.event_management_platform.repo.AppUserRepository;
 import emp.event_management_platform.service.IEvent;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -11,7 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -20,11 +23,15 @@ import java.util.List;
 @AllArgsConstructor
 public class AdminController {
     private IEvent iEvent;
+    private AppUserRepository appUserRepository;
 
     @GetMapping("/user/event/getAll")
     public String getAllEvents(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        AppUser user = appUserRepository.findByUsername(authentication.getName());
         List<Event> events = iEvent.getAll();
         model.addAttribute("events", events);
+        model.addAttribute("user", user);
         return "/events/listEvents";
     }
 
@@ -45,14 +52,14 @@ public class AdminController {
         return "redirect:/user/event/getAll";
     }
 
-    @GetMapping("/Admin/event/edit")
+    @GetMapping("/admin/event/edit")
     public String editEvent(@RequestParam(name = "id") Long id, Model model) {
         Event event = iEvent.getEventById(id);
         model.addAttribute("event", event);
         return "/events/editevent";
     }
 
-    @PostMapping("/Admin/event/update/{id}")
+    @PostMapping("/admin/event/update/{id}")
     public String updateEvent(@PathVariable("id") Long id,@Valid Event event, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) return "/events/editevent";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -63,9 +70,10 @@ public class AdminController {
         return "redirect:/user/event/getAll";
     }
 
-    @PostMapping("/Admin/event/delete/{id}")
-    public String deleteEvent(@PathVariable Long eventId) {
-        Event event = iEvent.getEventById(eventId);
+    @GetMapping("/admin/event/delete")
+    public String deleteEvent(@RequestParam(name = "id") Long id, Model model) {
+        Event event = iEvent.getEventById(id);
+//        System.out.println(id);
         iEvent.deleteEvent(event);
         return "redirect:/user/event/getAll";
     }

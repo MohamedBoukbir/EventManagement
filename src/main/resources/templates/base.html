@@ -3,7 +3,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
-    <title>Hospital</title>
+    <title>Event</title>
     <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="/webjars/bootstrap-icons/1.10.3/font/bootstrap-icons.css">
     <script src="/webjars/bootstrap/5.2.3/js/bootstrap.bundle.min.js"></script>
@@ -17,7 +17,7 @@
                 <a class="nav-link active" th:href="@{/user/event/getAll}">Home</a>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Patients</a>
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Event</a>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" th:href="@{/admin/event/add}">Nouveau</a></li>
                     <li><a class="dropdown-item" th:href="@{/user/event/getAll}">Chercher</a></li>

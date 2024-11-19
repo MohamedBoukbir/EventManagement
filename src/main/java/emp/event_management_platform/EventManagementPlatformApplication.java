@@ -15,7 +15,7 @@ public class EventManagementPlatformApplication {
         SpringApplication.run(EventManagementPlatformApplication.class, args);
     }
 
-   // @Bean
+    //@Bean
     CommandLineRunner commandLineRunnerUserDetails(Accountservice accountservice){
         return args -> {
             accountservice.addNewRole("USER");

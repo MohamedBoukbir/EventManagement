@@ -6,6 +6,10 @@
 <div layout:fragment="content">
 <section>
     <h2 class="my-4">All Events</h2>
+    <div class="align-content-center" th:if="${message != null}">
+        <span class="text-danger" th:if="${message.contains('false')}" th:text="${message.split(':')[0]}"></span>
+        <span class="text-success" th:if="${message.contains('true')}" th:text="${message.split(':')[0]}"></span>
+    </div>
     <table class="table table-striped">
         <thead class="thead-dark">
         <tr>
@@ -27,8 +31,16 @@
             <td th:text="${event.type}">Event Type</td>
             <td th:text="${event.capacity}">Capacity</td>
             <td>
-                <a th:href="@{/Admin/event/edit(id=${event.id})}" class="btn btn-primary btn-sm">Edit</a>
-                <a th:href="@{/Admin/event/delete(id=${event.id})}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this event?');">Delete</a>
+                <a th:if="${event.participants.contains(user)}"
+                   th:href="@{/user/register/event(id=${event.id})}"
+                   class="btn btn-warning btn-sm">Cancel</a>
+
+                <a th:if="${!event.participants.contains(user)}"
+                   th:href="@{/user/register/event(id=${event.id})}"
+                   class="btn btn-primary btn-sm">Register</a>
+                <a th:href="@{/admin/event/edit(id=${event.id})}" class="btn btn-success btn-sm">Edit</a>
+                <a th:href="@{/admin/event/delete(id=${event.id})}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this event?');">Delete</a>
+
             </td>
         </tr>
         </tbody>

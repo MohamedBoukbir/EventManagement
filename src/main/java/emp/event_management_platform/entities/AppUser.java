@@ -13,7 +13,8 @@ import java.util.List;
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class AppUser {
     @Id
-    private String userId ;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id ;
     @Column(unique = true)
     @NotEmpty
     private  String username;
@@ -24,4 +25,6 @@ public class AppUser {
     private String email;
     @ManyToMany(fetch = FetchType.EAGER)
     private List<AppRole> roles;
+    @ManyToMany(mappedBy = "participants", fetch = FetchType.EAGER)
+    private List<Event> events;
 }

@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class EventImpl implements IEvent {
+public class IEventImpl implements IEvent {
     private  EventRepository eventRepository;
     @Override
     public boolean isFull(Event event) {

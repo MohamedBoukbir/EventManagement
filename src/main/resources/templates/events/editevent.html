@@ -9,7 +9,7 @@
 <body>
 <div layout:fragment="content">
     <div class="p-3">
-        <form method="post" th:action="@{/Admin/event/update/{id}(id=${event.id})}">
+        <form method="post" th:action="@{/admin/event/update/{id}(id=${event.id})}">
             <div class="mb-3 mt-3">
                 <label for="title" class="form-label">Title</label>
                 <input type="text" class="form-control" id="title" placeholder="Title" name="title" th:value="${event.title}">

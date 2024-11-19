@@ -26,7 +26,6 @@ public class AccountserviceImpl implements Accountservice {
        if(appuser !=null) throw new RuntimeException("this user already exist");
        if (!password.equals(confirmpassword)) throw new RuntimeException("Password not match");
        appuser=AppUser.builder()
-               .userId(UUID.randomUUID().toString())
                .username(username)
                .password(passwordEncoder.encode(password))
                .email(email)
