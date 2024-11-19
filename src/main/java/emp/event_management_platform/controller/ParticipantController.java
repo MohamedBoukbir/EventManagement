@@ -3,6 +3,7 @@ package emp.event_management_platform.controller;
 import emp.event_management_platform.entities.AppUser;
 import emp.event_management_platform.entities.Event;
 import emp.event_management_platform.repo.AppUserRepository;
+import emp.event_management_platform.service.IEmailSend;
 import emp.event_management_platform.service.IEvent;
 import emp.event_management_platform.service.IParticipant;
 import lombok.AllArgsConstructor;
@@ -20,6 +21,7 @@ public class ParticipantController {
     private IParticipant participant;
     private IEvent iEvent;
     private AppUserRepository appUserRepository;
+    private IEmailSend iEmailSend;
 
 @GetMapping("user/register/event")
     public String  registerForEvent(@RequestParam Long id, RedirectAttributes redirectAttributes){
@@ -30,12 +32,20 @@ public class ParticipantController {
 
     if (event.getParticipants().contains(user)) {
          response = participant.cancelRegistration(user, event);
+        sendNotification("Cancellation from Event", response.split(":")[0]);
     }else{
         response = participant.registerForEvent(user, event);
+        sendNotification("Participation in Event", response.split(":")[0]);
     }
-    System.out.println(response);
     redirectAttributes.addFlashAttribute("message", response);
     return "redirect:/user/event/getAll" ;
+    }
+
+    public  String sendNotification(String subject, String body ){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        AppUser user = appUserRepository.findByUsername(authentication.getName());
+        iEmailSend.sendEmail(user.getEmail(), subject,body);
+        return "redirect:/user/event/getAll" ;
     }
 
 }
