@@ -38,6 +38,11 @@
                 <span class="text-danger" th:errors="${event.capacity}" th:value="${event.capacity}"></span>
             </div>
             <div class="mb-3 mt-3">
+                <label for="price" class="form-label">Price:</label>
+                <input type="number" class="form-control" id="price" placeholder="Price" name="price" th:value="${event.price}">
+                <span class="text-danger" th:errors="${event.price}" th:value="${event.price}"></span>
+            </div>
+            <div class="mb-3 mt-3">
                 <label for="type" class="form-label">Type:</label>
                 <select class="form-control" id="type" name="type" th:value="${event.type}" >
                     <option value="" disabled selected>Select event type</option>

@@ -1,0 +1,18 @@
+    <!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{base.html}">
+<head>
+    <title> Paypal Integration </title>
+</head>
+<body>
+<div layout:fragment="content">
+    <h1 class="text-center mt-5  text-danger">  Payment Error </h1>
+          <p class="text-center mt-3 "> An error occurred during  the  payment.Please try again </p>
+        <div class="d-flex justify-content-center mt-5">
+            <a   href="/payment" class="btn btn-primary"> Back to Home  </a>
+        </div>
+
+</div>
+</body>
+</html>

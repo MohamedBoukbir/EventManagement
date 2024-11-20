@@ -21,6 +21,7 @@ public class SecurityConfig {
         httpSecurity.authorizeHttpRequests().requestMatchers("/webjars/**").permitAll();
         httpSecurity.rememberMe();
         httpSecurity.authorizeHttpRequests().requestMatchers("/user/**").hasRole("USER"); // autorizer les user qunat un role USER
+        httpSecurity.authorizeHttpRequests().requestMatchers("/payment/**").hasRole("USER");
         httpSecurity.authorizeHttpRequests().requestMatchers("/admin/**").hasRole("ADMIN"); // autorizer les user qunat un role ADMIN
         httpSecurity.authorizeHttpRequests().anyRequest().authenticated();  // tous les requetes nisisite une autentification
         httpSecurity.exceptionHandling().accessDeniedPage("/notAuthenticated");

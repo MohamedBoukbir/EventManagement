@@ -33,6 +33,7 @@ public class IEventImpl implements IEvent {
         updateEvent.setDate(event.getDate());
         updateEvent.setCapacity(event.getCapacity());
         updateEvent.setType(event.getType());
+        updateEvent.setPrice(event.getPrice());
 //        updateEvent.setParticipants(event.getParticipants());
         eventRepository.save(updateEvent);
     }

@@ -2,8 +2,8 @@ package emp.event_management_platform.controller;
 
 import emp.event_management_platform.entities.AppUser;
 import emp.event_management_platform.entities.Event;
-import emp.event_management_platform.repo.AppUserRepository;
 import emp.event_management_platform.service.IEvent;
+import emp.event_management_platform.service.IParticipant;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,8 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -23,12 +21,11 @@ import java.util.List;
 @AllArgsConstructor
 public class AdminController {
     private IEvent iEvent;
-    private AppUserRepository appUserRepository;
+    private IParticipant participant;
 
     @GetMapping("/user/event/getAll")
     public String getAllEvents(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        AppUser user = appUserRepository.findByUsername(authentication.getName());
+        AppUser user = participant.getUserAuth();
         List<Event> events = iEvent.getAll();
         model.addAttribute("events", events);
         model.addAttribute("user", user);
@@ -73,7 +70,7 @@ public class AdminController {
     @GetMapping("/admin/event/delete")
     public String deleteEvent(@RequestParam(name = "id") Long id, Model model) {
         Event event = iEvent.getEventById(id);
-//        System.out.println(id);
+
         iEvent.deleteEvent(event);
         return "redirect:/user/event/getAll";
     }

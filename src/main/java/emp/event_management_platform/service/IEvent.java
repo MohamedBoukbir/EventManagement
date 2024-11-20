@@ -11,4 +11,5 @@ public interface IEvent {
     void deleteEvent(Event event);
      Event getEventById(Long id);
     List<Event> getAll();
+
 }

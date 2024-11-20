@@ -29,13 +29,18 @@ public class Event {
     @NotNull
     @Future
     private LocalDate date;
-    @Min(10)
+    @Min(1)
     @NotNull
     private int capacity;
     @Column(columnDefinition = "ENUM('CONFERENCE','WORKSHOP','PARTY')")
     @Enumerated(EnumType.STRING)
     @NotNull
     private EventType type ;
+    @NotNull
+    @Min(1)
+    private Double price;
     @ManyToMany(fetch = FetchType.EAGER)
     private List<AppUser> participants;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<AppUser> waiting_list;
 }
