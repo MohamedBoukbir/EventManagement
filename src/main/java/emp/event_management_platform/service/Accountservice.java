@@ -10,5 +10,7 @@ public interface Accountservice {
     void addRoleToUser(String username, String roleName);
     void removeRoleFromUser(String username, String roleName);
     AppUser loadUserByUsername(String username);
+    boolean existsByUsername(String username);
+    boolean existsByEmail(String email);
 
 }

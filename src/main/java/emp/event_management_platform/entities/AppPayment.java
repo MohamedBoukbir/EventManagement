@@ -27,9 +27,9 @@ public class AppPayment {
     @Enumerated(EnumType.STRING)
     @NotNull
     private PaymentStatus status;
-    @OneToOne
+    @ManyToOne
     private AppUser participant;
-    @OneToOne
+    @ManyToOne
     private Event event;
 
 }

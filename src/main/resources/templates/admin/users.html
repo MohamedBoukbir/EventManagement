@@ -16,14 +16,14 @@
             <div class="row page-titles mx-0">
                 <div class="col-sm-6 p-md-0">
                     <div class="welcome-text">
-                        <h4>All Event</h4>
+                        <h4>All User</h4>
                     </div>
                 </div>
                 <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active"><a href="javascript:void(0);">Events</a></li>
-                        <li class="breadcrumb-item active"><a href="javascript:void(0);">All Events</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:void(0);">Users</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:void(0);">All Users</a></li>
                     </ol>
                 </div>
             </div>
@@ -40,7 +40,7 @@
                         <div id="list-view" class="tab-pane fade active show col-lg-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title">All Events List  </h4>
+                                    <h4 class="card-title">All Users List  </h4>
                                     <a th:href="@{/admin/event/add}"   class="btn btn-primary">+ Add new</a>
                                 </div>
                                 <div class="card-body">
@@ -48,43 +48,37 @@
                                         <table id="example3" class="display" style="min-width: 845px">
                                             <thead>
                                             <tr>
-                                                <th>Title</th>
-                                                <th>Description</th>
-                                                <th>Location</th>
-                                                <th>Date</th>
-                                                <th>Type</th>
-                                                <th>Capacity</th>
+
+                                                <th>Username</th>
+                                                <th>EMail</th>
                                                 <th>Actions</th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr th:each="event : ${events}">
-                                                <td th:text="${event.title}">Event Title</td>
-                                                <td th:text="${event.description}">Event Description</td>
-                                                <td th:text="${event.location}">Event Location</td>
-                                                <td th:text="${event.date}">Event Date</td>
-                                                <td th:text="${event.type}">Event Type</td>
-                                                <td th:text="${event.capacity}">Capacity</td>
+                                            <tr th:each="user : ${users}">
+                                                <td th:text="${user.username}"></td>
+                                                <td th:text="${user.email}"></td>
+
                                                 <td>
-                                                    <a th:href="@{/admin/event/edit(id=${event.id})}" class="btn btn-sm btn-primary"><i class="fas fa-pen"></i></a>
-                                                    <a href="javascript:void(0);" class="btn btn-sm btn-danger"  data-bs-toggle="modal" th:data-bs-target="'#deleteModal'+ ${event.id }">
+                                                    <a th:href="@{/admin/event/edit(id=${user.id})}" class="btn btn-sm btn-primary"><i class="fas fa-pen"></i></a>
+                                                    <a href="javascript:void(0);" class="btn btn-sm btn-danger"  data-bs-toggle="modal" th:data-bs-target="'#deleteModal'+ ${user.id }">
                                                         <i class="fas fa-trash"></i>
                                                     </a>
 
 
                                                     <!-- Modal -->
-                                                    <div class="modal fade"  th:id="'deleteModal' + ${event.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabell" aria-hidden="true">
+                                                    <div class="modal fade"  th:id="'deleteModal' + ${user.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabell" aria-hidden="true">
                                                         <div class="modal-dialog">
                                                             <div class="modal-content">
-                                                                <form th:action="@{/admin/event/delete(id=${event.id})}" method="POST">
+                                                                <form th:action="@{/admin/event/delete(id=${user.id})}" method="POST">
                                                                     <div class="modal-header">
-                                                                        <h5 class="modal-title" th:id="'deleteModalLabel' + ${event.id}" >Confirm Delete</h5>
+                                                                        <h5 class="modal-title" th:id="'deleteModalLabel' + ${user.id}" >Confirm Delete</h5>
                                                                         <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">
                                                                             <i class="fas fa-trash"></i>
                                                                         </button>
                                                                     </div>
                                                                     <div class="modal-body">
-                                                                        Are you sure you want to delete Event  <strong th:text="${event.title}"></strong>?
+                                                                        Are you sure you want to delete User  <strong th:text="${user.username}"></strong>?
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>

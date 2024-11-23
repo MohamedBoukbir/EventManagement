@@ -18,7 +18,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {  // la creation d'un filtre pour l'autentification
         httpSecurity.formLogin().loginPage("/login").defaultSuccessUrl("/",true).permitAll(); // pour affichier une page login dans le cas quant je en veux acceder a notre appilcation
-        httpSecurity.authorizeHttpRequests().requestMatchers("/webjars/**").permitAll();
+        httpSecurity
+                .authorizeHttpRequests()
+                .requestMatchers("/register","/webjars/**", "/static/**", "/css/**", "/js/**", "/images/**")
+                .permitAll(); // Autorise les ressources statiques sans authentification
         httpSecurity.rememberMe();
         httpSecurity.authorizeHttpRequests().requestMatchers("/user/**").hasRole("USER"); // autorizer les user qunat un role USER
         httpSecurity.authorizeHttpRequests().requestMatchers("/payment/**").hasRole("USER");

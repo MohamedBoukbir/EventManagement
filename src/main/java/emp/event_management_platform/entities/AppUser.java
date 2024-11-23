@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -24,9 +25,12 @@ public class AppUser {
     @Column(unique = true)
     private String email;
     @ManyToMany(fetch = FetchType.EAGER)
-    private List<AppRole> roles;
+    private List<AppRole> roles ;
     @ManyToMany(mappedBy = "participants", fetch = FetchType.EAGER)
     private List<Event> events;
     @ManyToMany(mappedBy = "waiting_list", fetch = FetchType.EAGER)
     private List<Event> waiting_events;
+
+    @OneToMany(mappedBy = "participant", cascade = CascadeType.ALL)
+    private List<AppPayment> payments ;
 }

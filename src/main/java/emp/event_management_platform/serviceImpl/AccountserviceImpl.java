@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 @Service
@@ -29,6 +30,8 @@ public class AccountserviceImpl implements Accountservice {
                .username(username)
                .password(passwordEncoder.encode(password))
                .email(email)
+               .roles(new ArrayList<>())
+               .payments(new ArrayList<>())
                .build();
         return appUserRepository.save(appuser);
     }
@@ -45,9 +48,11 @@ public class AccountserviceImpl implements Accountservice {
 
     @Override
     public void addRoleToUser(String username, String roleName) {
+
      AppRole appRole = appRoleRepository.findById(roleName).get();
      AppUser appUser = appUserRepository.findByUsername(username);
-     appUser.getRoles().add(appRole);
+     appUser.getRoles().add(appRole); // Modify the collection in place
+
 //     appUserRepository.save(appUser);
 
     }
@@ -62,5 +67,15 @@ public class AccountserviceImpl implements Accountservice {
     @Override
     public AppUser loadUserByUsername(String username) {
         return appUserRepository.findByUsername(username);
+    }
+
+    @Override
+    public boolean existsByUsername(String username) {
+        return appUserRepository.findByUsername(username) != null;
+    }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        return appUserRepository.findByEmail(email) != null;
     }
 }

@@ -40,6 +40,7 @@ public class AdminController {
 
     @PostMapping("/admin/event/create")
     public String createEvent(@Valid Event event, BindingResult bindingResult) {
+
         if (bindingResult.hasErrors()) return "/events/addevent";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String formattedDate = event.getDate().format(formatter);
@@ -59,6 +60,7 @@ public class AdminController {
     @PostMapping("/admin/event/update/{id}")
     public String updateEvent(@PathVariable("id") Long id,@Valid Event event, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) return "/events/editevent";
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String formattedDate = event.getDate().format(formatter);
         LocalDate formattedLocalDate = LocalDate.parse(formattedDate, formatter);
@@ -74,4 +76,37 @@ public class AdminController {
         iEvent.deleteEvent(event);
         return "redirect:/user/event/getAll";
     }
+
+    @GetMapping("/admin/users")
+    public String getAllUsers(Model model) {
+        List<AppUser> users = participant.getAllUsers();
+
+        System.out.println(users.size());
+        for (AppUser user : users) {
+            System.out.println(user.getUsername());
+        }
+        model.addAttribute("users", users);
+        return "/admin/users";
+    }
+
+    @GetMapping("/admin/participants")
+    public String getAllParticipants(Model model) {
+        List<AppUser> participants = participant.getAllParticipants();
+
+        System.out.println(participants.size());
+
+        model.addAttribute("participants", participants);
+        return "/admin/participants";
+    }
+
+    @GetMapping("/admin/waiting_users")
+    public String getAllWaiting_list(Model model) {
+        List<AppUser> waiting_users = participant.getAllWaiting_list();
+
+        System.out.println(waiting_users.size());
+
+        model.addAttribute("waiting_users", waiting_users);
+        return "/admin/waiting_users";
+    }
+
 }

@@ -1,59 +1,112 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{base.html}">
-<head>
-    <meta charset="UTF-8">
-    <title>Edit Event</title>
-</head>
+      layout:decorate="~{Dashboard.html}">
+
 <body>
 <div layout:fragment="content">
-    <div class="p-3">
-        <form method="post" th:action="@{/admin/event/update/{id}(id=${event.id})}">
-            <div class="mb-3 mt-3">
-                <label for="title" class="form-label">Title</label>
-                <input type="text" class="form-control" id="title" placeholder="Title" name="title" th:value="${event.title}">
-                <span class="text-danger" th:errors="${event.title}" th:value="${event.title}"></span>
-            </div>
-            <div class="mb-3 mt-3">
-                <label for="date" class="form-label"> Date:</label>
-                <input type="date" class="form-control" id="date" name="date" th:value="${event.date}">
-                <span class="text-danger" th:errors="${event.date}" th:value="${event.date}"></span>
-            </div>
-            <div class="mb-3 mt-3">
-                <label for="description" class="form-label"> Description:</label>
-                <textarea class="form-control" id="description" placeholder="Description" name="description" th:text="${event.description}"></textarea>
-                <span class="text-danger" th:errors="${event.description}" th:value="${event.description}"></span>
-            </div>
+    <!--**********************************
+            Content body start
+        ***********************************-->
+    <!-- add-student.html -->
 
-            <div class="mb-3 mt-3">
-                <label for="location" class="form-label">Location:</label>
-                <input type="text" class="form-control" id="location" placeholder="Location" name="location" th:value="${event.location}">
-                <span class="text-danger" th:errors="${event.location}" th:value="${event.location}"></span>
+    <div class="content-body">
+        <div class="container-fluid">
+            <div class="row page-titles mx-0">
+                <div class="col-sm-6 p-md-0">
+                    <div class="welcome-text">
+                        <h4>Add Event</h4>
+                    </div>
+                </div>
+                <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active"><a href="#">Events</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:void(0);">Edit Event</a></li>
+                    </ol>
+                </div>
             </div>
-            <div class="mb-3 mt-3">
-                <label for="capacity" class="form-label">Capacity:</label>
-                <input type="number" class="form-control" id="capacity" placeholder="Capacity" name="capacity" th:value="${event.capacity}">
-                <span class="text-danger" th:errors="${event.capacity}" th:value="${event.capacity}"></span>
+            <div class="row">
+                <div class="col-xl-12 col-xxl-12 col-sm-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">Basic Info</h5>
+                        </div>
+                        <div class="card-body">
+                            <form method="post" th:action="@{/admin/event/update/{id}(id=${event.id})}">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="title"  class="form-label">Title</label>
+                                            <input type="text" class="form-control" id="title" placeholder="Title"  name="title" th:value="${event.title}">
+                                            <span class="text-danger" th:errors="${event.title}" th:value="${event.title}"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="date" class="form-label"> Date:</label>
+                                            <input type="date" class="form-control datepicker-default" id="date" name="date" th:value="${event.date}">
+                                            <span class="text-danger" th:errors="${event.date}" th:value="${event.date}" > </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="location" class="form-label">Location:</label>
+                                            <input type="text" class="form-control" id="location" placeholder="Location" name="location"  th:value="${event.location}">
+                                            <span class="text-danger" th:errors="${event.location}" th:value="${event.location}"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="capacity" class="form-label">Capacity:</label>
+                                            <input type="number" class="form-control" id="capacity" placeholder="Capacity" name="capacity" th:value="${event.capacity}" >
+                                            <span class="text-danger" th:errors="${event.capacity}" th:value="${event.capacity}"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="price" class="form-label">Price:</label>
+                                            <input type="number" class="form-control" id="price" placeholder="Price" name="price"  th:value="${event.price}">
+                                            <span class="text-danger" th:errors="${event.price}" th:value="${event.price}"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="type" class="form-label">Type:</label>
+                                            <select class="form-control" id="type" name="type" th:value="${event.type}" >
+                                                <option value="" disabled selected>Select event type</option>
+                                                <option value="CONFERENCE">Conference</option>
+                                                <option value="WORKSHOP">Workshop</option>
+                                                <option value="PARTY">Party</option>
+                                            </select>
+                                            <span class="text-danger" th:errors="${event.type}"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="description" class="form-label"> Description:</label>
+                                            <textarea class="form-control" id="description" placeholder="Description" name="description" th:text="${event.description}"></textarea>
+                                            <span class="text-danger" th:errors="${event.description}" th:value="${event.description}"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                        <a  type="reset" href="#" class="btn btn-light">Cancel</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="mb-3 mt-3">
-                <label for="price" class="form-label">Price:</label>
-                <input type="number" class="form-control" id="price" placeholder="Price" name="price" th:value="${event.price}">
-                <span class="text-danger" th:errors="${event.price}" th:value="${event.price}"></span>
-            </div>
-            <div class="mb-3 mt-3">
-                <label for="type" class="form-label">Type:</label>
-                <select class="form-control" id="type" name="type" th:value="${event.type}" >
-                    <option value="" disabled selected>Select event type</option>
-                    <option value="CONFERENCE">Conference</option>
-                    <option value="WORKSHOP">Workshop</option>
-                    <option value="PARTY">Party</option>
-                </select>
-                <span class="text-danger" th:errors="${event.type}"></span>
-            </div>
-            <button type="submit" class="btn btn-primary">Save Event</button>
-        </form>
+        </div>
     </div>
+
 </div>
+
+
 </body>
 </html>

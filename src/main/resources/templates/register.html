@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html  class="h-100" lang="en" xmlns:th="http://www.thymeleaf.org"
+       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Autentication</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="h-100 " >
+<div class="authincation h-100">
+    <div class="container h-100">
+        <div class="row justify-content-center h-100 align-items-center">
+            <div class="col-md-6">
+                <div class="authincation-content">
+                    <div class="row no-gutters">
+                        <div class="col-xl-12">
+                            <div class="auth-form">
+                                <h4 class="text-center mb-4">Sign up your account</h4>
+                                <form th:action="@{/register}" method="post">
+                                    <div class="form-group">
+                                        <label for="username" class="form-label" ><strong>Username</strong></label>
+                                        <input type="text" class="form-control" id="username" placeholder="Username" name="username" th:value="${user.username}">
+                                        <span class="text-danger mt-1" th:errors="${user.username}" ></span>
+                                        <span class="text-danger mt-1" th:if="${usernameError}" th:text="${usernameError}"   ></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email" class="form-label" ><strong>Email</strong></label>
+                                        <input type="email" class="form-control" placeholder="Email" id="email"  name="email"  th:value="${user.email}">
+                                        <span class="text-danger mt-1" th:errors="${user.email}" ></span>
+                                        <span class="text-danger mt-1"  th:if="${emailError}" th:text="${emailError}" ></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password" class="form-label"><strong>Password</strong></label>
+                                        <input type="password" class="form-control" id="password" placeholder="Password" name="password"  th:value="${user.password}" >
+                                        <span class="text-danger mt-1" th:errors="${user.password}" ></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="confirmPassword" class="form-label"><strong>Confirm Password</strong></label>
+                                        <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" placeholder="Confirm Password">
+
+                                        <span class="text-danger mt-1" th:if="${confirmPasswordError}" th:text="${confirmPasswordError}"></span>
+                                    </div>
+
+
+                                    <div class="text-center mt-4">
+                                        <button type="submit" class="btn btn-primary btn-block">Sign me up</button>
+                                    </div>
+                                </form>
+                                <div class="new-account mt-3">
+                                    <p>Already have an account? <a class="text-primary" th:href="@{/login}">Sign in</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--**********************************
+    Scripts
+***********************************-->
+<!-- Required vendors -->
+<script th:src="@{/js/global.min.js}"></script>
+<script th:src="@{/js/bootstrap-select.min.js}"></script>
+<script th:src="@{/js/custom.min.js}"></script>
+<script th:src="@{/js/dlabnav-init.js}"></script>
+
+</body>
+</html>

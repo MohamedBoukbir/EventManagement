@@ -24,7 +24,7 @@ public class EventManagementPlatformApplication {
             accountservice.addNewUser("user2","1234","user2@gmail.com","1234");
             accountservice.addNewUser("admin","1234","admin@gmail.com","1234");
             accountservice.addRoleToUser("admin","ADMIN");
-            accountservice.addRoleToUser("admin","USER");
+//            accountservice.addRoleToUser("admin","USER");
             accountservice.addRoleToUser("user1","USER");
             accountservice.addRoleToUser("user2","USER");
 
