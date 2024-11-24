@@ -10,9 +10,9 @@
     <link rel="stylesheet" th:href="@{/css/style.css}">
     <link rel="stylesheet" th:href="@{/css/skin-2.css}">
 
-<!--    <link rel="stylesheet" th:href="@{/css/default.date.css}">-->
-<!--    <link rel="stylesheet" th:href="@{/css/default.css}">-->
-        <link rel="stylesheet" th:href="@{/css/jquery.dataTables.min.css}">
+    <!--    <link rel="stylesheet" th:href="@{/css/default.date.css}">-->
+    <!--    <link rel="stylesheet" th:href="@{/css/default.css}">-->
+    <link rel="stylesheet" th:href="@{/css/jquery.dataTables.min.css}">
 
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -194,38 +194,22 @@
         <div class="dlabnav-scroll">
             <ul class="metismenu" >
                 <li class="nav-label first">Main Menu</li>
-                <li><a class="has-arrow" th:href="@{/admin/dashboard}" aria-expanded="false">
+                <li><a class="has-arrow" th:href="@{/user/dashboard}" aria-expanded="false">
                     <i class="fas fa-home"></i>
                     <span class="nav-text">Dashboard</span>
                 </a>
                 </li>
 
                 <li><a class="has-arrow" href="#" aria-expanded="false">
-                    <i class="fas fa-users"></i>
-                    <span class="nav-text">Users</span>
-                </a>
-                    <ul aria-expanded="false">
-                        <li><a th:href="@{/admin/users}">All users</a></li>
-                        <li><a th:href="@{/admin/participants}">All participants</a></li>
-                        <li><a th:href="@{/admin/waiting_users}">All waiting users</a></li>
-                    </ul>
-                </li>
-                <li><a class="has-arrow" href="#" aria-expanded="false">
                     <i class="fas fa-list"></i>
                     <span class="nav-text">events</span>
                 </a>
                     <ul aria-expanded="false">
-                        <li><a th:href="@{/admin/event/getAll}">All events</a></li>
+                        <li><a th:href="@{/user/event/getAll}">All Events</a></li>
+                        <li><a th:href="@{/user/my/events}">My Events</a></li>
                     </ul>
                 </li>
-                <li><a class="has-arrow" href="#" aria-expanded="false">
-                    <i class="fas fa-credit-card"></i>
-                    <span class="nav-text">payments</span>
-                </a>
-                    <ul aria-expanded="false">
-                        <li><a th:href="@{/admin/payments}">All payments</a></li>
-                    </ul>
-                </li>
+
             </ul>
         </div>
     </div>
@@ -233,10 +217,10 @@
         Sidebar end
     ***********************************-->
 
-<!-- Content -->
-<div layout:fragment="content">
-    <!-- Placeholder for child templates content -->
-</div>
+    <!-- Content -->
+    <div layout:fragment="content">
+        <!-- Placeholder for child templates content -->
+    </div>
 
     <!--**********************************
             Footer start

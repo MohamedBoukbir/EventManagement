@@ -28,8 +28,8 @@ public class AppUser {
     private List<AppRole> roles ;
     @ManyToMany(mappedBy = "participants", fetch = FetchType.EAGER)
     private List<Event> events;
-    @ManyToMany(mappedBy = "waiting_list", fetch = FetchType.EAGER)
-    private List<Event> waiting_events;
+    @ManyToMany(mappedBy = "waitinglist", fetch = FetchType.EAGER)
+    private List<Event> waitingEvents;
 
     @OneToMany(mappedBy = "participant", cascade = CascadeType.ALL)
     private List<AppPayment> payments ;

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{DashboardParticipants.html}">
+<body>
+<div layout:fragment="content">
+    <!--**********************************
+           Content body start
+       ***********************************-->
+    <div class="content-body">
+        <!-- row -->
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-xl-3 col-xxl-3 col-sm-6">
+                    <div class="widget-stat card bg-primary overflow-hidden">
+                        <div class="card-header">
+                            <h3 class="card-title text-white">Total Events</h3>
+                            <h5 class="text-white mb-0 "><i class="fa fa-caret-up mr-1"></i>  <span th:text="${events}"></span></h5>
+                        </div>
+                        <div class="card-body text-center mt-3">
+                            <div class="ico-sparkline">
+                                <div id="sparkline12"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-xxl-3 col-sm-6">
+                    <div class="widget-stat card bg-success overflow-hidden">
+                        <div class="card-header">
+                            <h3 class="card-title text-white">My Events</h3>
+                            <h5 class="text-white mb-0"><i class="fa fa-caret-up mr-1"></i>  <span th:text="${myEvents}"></span> </h5>
+                        </div>
+                        <div class="card-body text-center mt-4 p-0">
+                            <div class="ico-sparkline">
+                                <div id="spark-bar-2"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-xxl-3 col-sm-6">
+                    <div class="widget-stat card bg-secondary overflow-hidden">
+                        <div class="card-header pb-3">
+                            <h3 class="card-title text-white">My Waiting Events</h3>
+                            <h5 class="text-white mb-0"><i class="fa fa-caret-up mr-1"></i>  <span th:text="${waitingEvents}"></span></h5>
+                        </div>
+                        <div class="card-body p-0 mt-2">
+                            <div class="px-4"><span class="bar1" data-peity='{ "fill": ["rgb(0, 0, 128)", "rgb(7, 135, 234)"]}'>6,2,8,4,-3,8,1,-3,6,-5,9,2,-8,1,4,8,9,8,2,1</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-xxl-3 col-sm-6">
+                    <div class="widget-stat card bg-danger overflow-hidden">
+                        <div class="card-header pb-3">
+                            <h3 class="card-title text-white">Amount Spent</h3>
+                            <h5 class="text-white mb-0"><i class="fa fa-caret-up mr-1"></i>  <span th:text="${amount}+'$'"></span></h5>
+                        </div>
+                        <div class="card-body p-0 mt-1">
+                            <span class="peity-line-2" data-width="100%">7,6,8,7,3,8,3,3,6,5,9,2,8</span>
+                        </div>
+                    </div>
+                </div>
+              
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title"> Events in the next 30 days </h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table id="example3" class="display" style="min-width: 845px">
+                                    <thead>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Description</th>
+                                        <th>Location</th>
+                                        <th>Date</th>
+                                        <th>Type</th>
+                                        <th>Capacity</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="upcomingEvent : ${upcomingEvents}">
+                                        <td th:text="${upcomingEvent.title}"></td>
+                                        <td th:text="${upcomingEvent.description}"></td>
+                                        <td th:text="${upcomingEvent.location}"></td>
+                                        <td th:text="${upcomingEvent.date}"></td>
+                                        <td th:text="${upcomingEvent.type}"></td>
+                                        <td th:text="${upcomingEvent.capacity}"></td>
+                                        <td>
+                                            <a th:href="@{/admin/event/edit(id=${upcomingEvent.id})}" class="btn btn-sm btn-primary"><i class="fas fa-pen"></i></a>
+                                            <a href="javascript:void(0);" class="btn btn-sm btn-danger"  data-bs-toggle="modal" th:data-bs-target="'#deleteModal'+ ${upcomingEvent.id }">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+
+
+                                            <!-- Modal -->
+                                            <div class="modal fade"  th:id="'deleteModal' + ${upcomingEvent.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabell" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <form th:action="@{/admin/event/delete(id=${upcomingEvent.id})}" method="POST">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" th:id="'deleteModalLabel' + ${upcomingEvent.id}" >Confirm Delete</h5>
+                                                                <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                                                    <i class="fas fa-trash"></i>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                Are you sure you want to delete Event  <strong th:text="${upcomingEvent.title}"></strong>?
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--**********************************
+        Content body end
+    ***********************************-->
+
+</div>
+</body>
+</html>

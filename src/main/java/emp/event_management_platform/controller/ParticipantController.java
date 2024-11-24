@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -20,6 +21,8 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @AllArgsConstructor
@@ -131,7 +134,7 @@ public class ParticipantController {
        String response;
         AppUser user = participant.getUserAuth();
         Event event = iEvent.getEventById(id);
-        if (!event.getWaiting_list().contains(user)) {
+        if (!event.getWaitinglist().contains(user)) {
        response= participant.registerWaitingForEvent(user,event);
 //       sendNotification("Waiting list   Event", response.split(":")[0]);
         redirectAttributes.addFlashAttribute("message", response);
@@ -141,6 +144,44 @@ public class ParticipantController {
     }
 
 
+    @GetMapping("/user/event/getAll")
+    public String getAllEvents(Model model) {
+        AppUser user = participant.getUserAuth();
+        List<Event> events = iEvent.getAll();
+        model.addAttribute("events", events);
+        model.addAttribute("user", user);
+        return "/participants/listEvents";
+    }
 
+    @GetMapping("/user/my/events")
+    public String getMyEvents(Model model) {
+        AppUser user = participant.getUserAuth();
+        List<Event> events = participant.getMyEvents(user);
+        List<Event> waitingevents =participant.getMyWaitingEvents(user);
+        model.addAttribute("events", events);
+        model.addAttribute("user", user);
+        System.out.println(waitingevents.size());
+        model.addAttribute("waitingevents", waitingevents);
+        return "/participants/myEvents";
+    }
+
+   @GetMapping("/user/dashboard")
+    public String Dashboard(Model model){
+       AppUser user = participant.getUserAuth();
+       Double amount =user.getPayments().stream().mapToDouble(AppPayment::getAmount).sum();
+
+       LocalDate today = LocalDate.now();
+       LocalDate nextMonth = today.plusDays(30);
+
+       List<Event> upcomingEvents = iEvent.getAll().stream()
+               .filter(event -> event.getDate().isAfter(today) && event.getDate().isBefore(nextMonth))
+               .collect(Collectors.toList());
+       model.addAttribute("upcomingEvents",upcomingEvents);
+       model.addAttribute("amount",amount);
+       model.addAttribute("events", iEvent.getAll().size());
+       model.addAttribute("myEvents", participant.getMyEvents(user).size());
+       model.addAttribute("waitingEvents", participant.getMyWaitingEvents(user).size());
+    return "/participants/index";
+    }
 
 }

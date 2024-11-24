@@ -30,8 +30,8 @@ public class IParticipantImpl implements IParticipant {
 
     @Override
     public String registerWaitingForEvent(AppUser appUser, Event event) {
-        event.getWaiting_list().add(appUser);
-        appUser.getWaiting_events().add(event);
+        event.getWaitinglist().add(appUser);
+        appUser.getWaitingEvents().add(event);
         return "Your are in the waiting list: true";
     }
 
@@ -46,7 +46,17 @@ public class IParticipantImpl implements IParticipant {
     }
     @Override
     public List<AppUser> getAllWaiting_list() {
-        return eventRepository.findAllWaiting_list() ;
+        return eventRepository.findAllWaitinglist() ;
+    }
+
+    @Override
+    public List<Event> getMyEvents(AppUser appUser) {
+        return eventRepository.findByParticipantsContains(appUser);
+    }
+
+    @Override
+    public List<Event> getMyWaitingEvents(AppUser appUser) {
+        return eventRepository.findByWaitinglistContains(appUser);
     }
 
     @Override

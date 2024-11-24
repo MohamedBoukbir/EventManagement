@@ -30,10 +30,6 @@
 
             <div class="row">
                 <div class="col-lg-12">
-                    <ul class="nav nav-pills mb-3">
-                        <li class="nav-item"><a href="#list-view" data-toggle="tab" class="nav-link btn-primary mr-1 show active">List View</a></li>
-                        <li class="nav-item"><a href="#grid-view" data-toggle="tab" class="nav-link btn-primary">Grid View</a></li>
-                    </ul>
                 </div>
                 <div class="col-lg-12">
                     <div class="row tab-content">
@@ -41,7 +37,7 @@
                             <div class="card">
                                 <div class="card-header">
                                     <h4 class="card-title">All Payments List  </h4>
-                                    <a th:href="@{/admin/event/add}"   class="btn btn-primary">+ Add new</a>
+
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -49,36 +45,37 @@
                                             <thead>
                                             <tr>
 
-                                                <th>Username</th>
-                                                <th>EMail</th>
+                                                <th>Amount</th>
+                                                <th>Date</th>
+                                                <th>Status</th>
                                                 <th>Actions</th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr th:each="user : ${users}">
-                                                <td th:text="${user.username}"></td>
-                                                <td th:text="${user.email}"></td>
-
+                                            <tr th:each="payment : ${payments}">
+                                                <td th:text="${payment.amount} +'$'"></td>
+                                                <td th:text="${payment.date}"></td>
+                                                <td th:text="${payment.status}"></td>
                                                 <td>
-                                                    <a th:href="@{/admin/event/edit(id=${user.id})}" class="btn btn-sm btn-primary"><i class="fas fa-pen"></i></a>
-                                                    <a href="javascript:void(0);" class="btn btn-sm btn-danger"  data-bs-toggle="modal" th:data-bs-target="'#deleteModal'+ ${user.id }">
+                                                    <a th:href="@{/admin/event/edit(id=${payment.id})}" class="btn btn-sm btn-primary"><i class="fas fa-pen"></i></a>
+                                                    <a href="javascript:void(0);" class="btn btn-sm btn-danger"  data-bs-toggle="modal" th:data-bs-target="'#deleteModal'+ ${payment.id }">
                                                         <i class="fas fa-trash"></i>
                                                     </a>
 
 
                                                     <!-- Modal -->
-                                                    <div class="modal fade"  th:id="'deleteModal' + ${user.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabell" aria-hidden="true">
+                                                    <div class="modal fade"  th:id="'deleteModal' + ${payment.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabell" aria-hidden="true">
                                                         <div class="modal-dialog">
                                                             <div class="modal-content">
-                                                                <form th:action="@{/admin/event/delete(id=${user.id})}" method="POST">
+                                                                <form th:action="@{/admin/event/delete(id=${payment.id})}" method="POST">
                                                                     <div class="modal-header">
-                                                                        <h5 class="modal-title" th:id="'deleteModalLabel' + ${user.id}" >Confirm Delete</h5>
+                                                                        <h5 class="modal-title" th:id="'deleteModalLabel' + ${payment.id}" >Confirm Delete</h5>
                                                                         <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">
                                                                             <i class="fas fa-trash"></i>
                                                                         </button>
                                                                     </div>
                                                                     <div class="modal-body">
-                                                                        Are you sure you want to delete User  <strong th:text="${user.username}"></strong>?
+                                                                        Are you sure you want to delete User  <strong th:text="okkkk"></strong>?
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>

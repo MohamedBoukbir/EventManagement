@@ -7,6 +7,8 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @Transactional
 @AllArgsConstructor
@@ -15,5 +17,10 @@ public class IPaymentServiceImpl implements IPaymentService {
     @Override
     public void createPayment(AppPayment payment) {
         paymentRepository.save(payment);
+    }
+
+    @Override
+    public List<AppPayment> getAllPayments() {
+        return paymentRepository.findAll();
     }
 }

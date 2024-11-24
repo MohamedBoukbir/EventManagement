@@ -1,9 +1,11 @@
 package emp.event_management_platform.controller;
 
+import emp.event_management_platform.entities.AppPayment;
 import emp.event_management_platform.entities.AppUser;
 import emp.event_management_platform.entities.Event;
 import emp.event_management_platform.service.IEvent;
 import emp.event_management_platform.service.IParticipant;
+import emp.event_management_platform.service.IPaymentService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,14 +18,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @AllArgsConstructor
 public class AdminController {
     private IEvent iEvent;
     private IParticipant participant;
+    private IPaymentService paymentService;
 
-    @GetMapping("/user/event/getAll")
+    @GetMapping("/admin/event/getAll")
     public String getAllEvents(Model model) {
         AppUser user = participant.getUserAuth();
         List<Event> events = iEvent.getAll();
@@ -47,7 +51,7 @@ public class AdminController {
         LocalDate formattedLocalDate = LocalDate.parse(formattedDate, formatter);
         event.setDate(formattedLocalDate);
         iEvent.createEvent(event);
-        return "redirect:/user/event/getAll";
+        return "redirect:/admin/event/getAll";
     }
 
     @GetMapping("/admin/event/edit")
@@ -66,7 +70,7 @@ public class AdminController {
         LocalDate formattedLocalDate = LocalDate.parse(formattedDate, formatter);
         event.setDate(formattedLocalDate);
         iEvent.updateEvent(id,event);
-        return "redirect:/user/event/getAll";
+        return "redirect:/admin/event/getAll";
     }
 
     @GetMapping("/admin/event/delete")
@@ -74,7 +78,7 @@ public class AdminController {
         Event event = iEvent.getEventById(id);
 
         iEvent.deleteEvent(event);
-        return "redirect:/user/event/getAll";
+        return "redirect:/admin/event/getAll";
     }
 
     @GetMapping("/admin/users")
@@ -107,6 +111,23 @@ public class AdminController {
 
         model.addAttribute("waiting_users", waiting_users);
         return "/admin/waiting_users";
+    }
+
+    @GetMapping("/admin/dashboard")
+    public String Dashboard(Model model){
+        Double amount =paymentService.getAllPayments().stream().mapToDouble(AppPayment::getAmount).sum();
+        LocalDate today = LocalDate.now();
+        LocalDate nextMonth = today.plusDays(30);
+
+        List<Event> upcomingEvents = iEvent.getAll().stream()
+                .filter(event -> event.getDate().isAfter(today) && event.getDate().isBefore(nextMonth))
+                .collect(Collectors.toList());
+        model.addAttribute("upcomingEvents",upcomingEvents);
+        model.addAttribute("amount",amount);
+        model.addAttribute("events", iEvent.getAll().size());
+        model.addAttribute("users", participant.getAllUsers().size());
+        model.addAttribute("participants", participant.getAllParticipants().size());
+        return "/admin/index";
     }
 
 }

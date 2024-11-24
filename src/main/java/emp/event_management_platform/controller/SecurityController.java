@@ -70,11 +70,11 @@ public class SecurityController {
     public String home(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
-            return "redirect:/admin/users";
+            return "redirect:/admin/dashboard";
         }
 
         if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
-            return "redirect:/user/event/getAll";
+            return "redirect:/user/dashboard";
         }
         return "redirect:/login?error";
     }

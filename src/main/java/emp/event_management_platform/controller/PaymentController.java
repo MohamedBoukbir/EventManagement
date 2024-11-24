@@ -1,8 +1,11 @@
 package emp.event_management_platform.controller;
 
+
 import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.PayPalRESTException;
+import emp.event_management_platform.entities.AppPayment;
+import emp.event_management_platform.service.IPaymentService;
 import emp.event_management_platform.service.IPaypalService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,16 +13,27 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.ui.Model;
+
+import java.util.List;
 
 @Controller
 @AllArgsConstructor
 @Slf4j
 public class PaymentController {
     private final IPaypalService paypalService;
+    private IPaymentService paymentService;
     @GetMapping("/payment")
     public  String index(){
 
         return "/payments/payment";
+    }
+
+    @GetMapping("/admin/payments")
+    public String getAllpayment(Model model){
+        List<AppPayment> payments =paymentService.getAllPayments();
+        model.addAttribute("payments", payments);
+        return "/admin/payments";
     }
 
 //    @GetMapping("/payment/create")

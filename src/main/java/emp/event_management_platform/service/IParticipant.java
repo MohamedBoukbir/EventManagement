@@ -13,4 +13,7 @@ public interface IParticipant {
    List<AppUser> getAllUsers();
    List<AppUser> getAllParticipants();
    List<AppUser> getAllWaiting_list();
+   List<Event>  getMyEvents(AppUser appUser);
+ List<Event>  getMyWaitingEvents(AppUser appUser);
+
 }

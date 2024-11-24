@@ -42,7 +42,7 @@ public class Event {
     @ManyToMany(fetch = FetchType.EAGER)
     private List<AppUser> participants;
     @ManyToMany(fetch = FetchType.EAGER)
-    private List<AppUser> waiting_list;
+    private List<AppUser> waitinglist;
 
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<AppPayment> payments;
