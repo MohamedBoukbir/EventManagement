@@ -60,6 +60,16 @@ public class IParticipantImpl implements IParticipant {
     }
 
     @Override
+    public void deleteUser(AppUser appUser) {
+        appUserRepository.delete(appUser);
+    }
+
+    @Override
+    public AppUser findUserById(String id) {
+        return appUserRepository.findById(id) .orElseThrow(() -> new RuntimeException("Event not found"));
+    }
+
+    @Override
     public String registerForEvent(AppUser user, Event event) {
         if (event.getParticipants().size() >= event.getCapacity()) {
             return "The event has exceeded the capacity: false";

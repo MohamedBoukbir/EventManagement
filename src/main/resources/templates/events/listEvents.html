@@ -63,33 +63,93 @@
                                                 <td th:text="${event.capacity}">Capacity</td>
                                                 <td>
                                                     <a th:href="@{/admin/event/edit(id=${event.id})}" class="btn btn-sm btn-primary"><i class="fas fa-pen"></i></a>
-                                                    <a href="javascript:void(0);" class="btn btn-sm btn-danger"  data-bs-toggle="modal" th:data-bs-target="'#deleteModal'+ ${event.id }">
-                                                        <i class="fas fa-trash"></i>
+                                                    <a href="javascript:void(0)" data-toggle="modal" th:data-target="'#delete-modal'+${event.id}" class="btn btn-sm btn-danger">
+                                                        <span class="align-middle"><i class="fas fa-trash"></i></span>
                                                     </a>
 
+                                                    <a href="javascript:void(0)" data-toggle="modal" th:data-target="'#show-modal'+${event.id}" class="btn btn-sm btn-info">
+                                                        <span class="align-middle"><i class="fas fa-users"></i></span>
+                                                    </a>
+                                                    <a href="javascript:void(0)" data-toggle="modal" th:data-target="'#waiting-modal'+${event.id}" class="btn btn-sm btn-warning">
+                                                        <span class="align-middle"><i class="fas fa-user-clock"></i></span>
+                                                    </a>
 
-                                                    <!-- Modal -->
-                                                    <div class="modal fade"  th:id="'deleteModal' + ${event.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabell" aria-hidden="true">
+                                                    <!-- Modal delete -->
+                                                    <div class="modal fade none-border" th:id="'delete-modal'+${event.id}">
                                                         <div class="modal-dialog">
                                                             <div class="modal-content">
                                                                 <form th:action="@{/admin/event/delete(id=${event.id})}" method="POST">
                                                                     <div class="modal-header">
-                                                                        <h5 class="modal-title" th:id="'deleteModalLabel' + ${event.id}" >Confirm Delete</h5>
-                                                                        <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">
-                                                                            <i class="fas fa-trash"></i>
+                                                                        <h5 class="modal-title" th:id="'delete-modal'+${event.id}" >Confirm Delete</h5>
+                                                                        <button type="button" class="btn btn-close" data-dismiss="modal" aria-label="Close">
+                                                                            <i class="fas fa-times"></i>
                                                                         </button>
                                                                     </div>
                                                                     <div class="modal-body">
                                                                         Are you sure you want to delete Event  <strong th:text="${event.title}"></strong>?
                                                                     </div>
                                                                     <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                                                                         <button type="submit" class="btn btn-danger">Delete</button>
                                                                     </div>
                                                                 </form>
                                                             </div>
                                                         </div>
                                                     </div>
+
+                                                    <!-- Modal show participant -->
+                                                    <div class="modal fade" th:id="'show-modal'+${event.id}" tabindex="-1" aria-labelledby="showModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="showModalLabel">Participants for <span th:text="${event.title}"></span></h5>
+                                                                    <button type="button" class="btn btn-close" data-dismiss="modal" aria-label="Close">
+                                                                        <i class="fas fa-times"></i>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <h6>Participants List:</h6>
+                                                                    <ul class="list-group">
+                                                                        <li class="list-group-item" th:each="participant : ${event.participants}">
+                                                                            <strong th:text="${participant.username}"></strong> -
+                                                                            <span th:text="${participant.email}"></span>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Modal show waiting users -->
+                                                    <div class="modal fade" th:id="'waiting-modal'+${event.id}" tabindex="-1" aria-labelledby="waitingModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="waitingModalLabel">Waiting List for Event: <span th:text="${event.title}"></span></h5>
+                                                                    <button type="button" class="btn btn-close" data-dismiss="modal" aria-label="Close">
+                                                                        <i class="fas fa-times"></i>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <h6>Users on the Waiting List:</h6>
+                                                                    <ul class="list-group">
+                                                                        <li class="list-group-item" th:each="waitinguser : ${event.waitinglist}">
+                                                                            <strong th:text="${waitinguser.username}"></strong> -
+                                                                            <span th:text="${waitinguser.email}"></span>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
                                                 </td>
                                             </tr>
 
@@ -109,6 +169,43 @@
     </div>
 
 </div>
+
+<!-- Modal de confirmation -->
+<div class="modal fade" id="confirmation-modal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Afficher le message de succès -->
+                <p th:if="${successMessage}" th:text="${successMessage}">Event successfully deleted!</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Script -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Récupérer le message de succès (Flash Attribute injecté par Spring)
+        const successMessage = /*[[${successMessage}]]*/ null;
+
+        // Si le message est défini, afficher la popup
+        if (successMessage !== null) {
+            const confirmationModal = new bootstrap.Modal(document.getElementById('confirmation-modal'));
+            confirmationModal.show();
+        }
+    });
+</script>
+
+
+
 
 </body>
 

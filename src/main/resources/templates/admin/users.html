@@ -38,7 +38,6 @@
                             <div class="card">
                                 <div class="card-header">
                                     <h4 class="card-title">All Users List  </h4>
-                                    <a th:href="@{/admin/event/add}"   class="btn btn-primary">+ Add new</a>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -57,34 +56,34 @@
                                                 <td th:text="${user.email}"></td>
 
                                                 <td>
-                                                    <a th:href="@{/admin/event/edit(id=${user.id})}" class="btn btn-sm btn-primary"><i class="fas fa-pen"></i></a>
-                                                    <a href="javascript:void(0);" class="btn btn-sm btn-danger"  data-bs-toggle="modal" th:data-bs-target="'#deleteModal'+ ${user.id }">
-                                                        <i class="fas fa-trash"></i>
+
+                                                    <a href="javascript:void(0)" data-toggle="modal" th:data-target="'#delete-modal'+${user.id}" class="btn btn-sm btn-danger">
+                                                        <span class="align-middle"><i class="fas fa-trash"></i></span>
                                                     </a>
 
-
-                                                    <!-- Modal -->
-                                                    <div class="modal fade"  th:id="'deleteModal' + ${user.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabell" aria-hidden="true">
+                                                    <!-- Modal delete -->
+                                                    <div class="modal fade none-border" th:id="'delete-modal'+${user.id}">
                                                         <div class="modal-dialog">
                                                             <div class="modal-content">
-                                                                <form th:action="@{/admin/event/delete(id=${user.id})}" method="POST">
+                                                                <form th:action="@{/admin/user/delete(id=${user.id})}" method="POST">
                                                                     <div class="modal-header">
-                                                                        <h5 class="modal-title" th:id="'deleteModalLabel' + ${user.id}" >Confirm Delete</h5>
-                                                                        <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">
-                                                                            <i class="fas fa-trash"></i>
+                                                                        <h5 class="modal-title" th:id="'delete-modal'+${user.id}" >Confirm Delete</h5>
+                                                                        <button type="button" class="btn btn-close" data-dismiss="modal" aria-label="Close">
+                                                                            <i class="fas fa-times"></i>
                                                                         </button>
                                                                     </div>
                                                                     <div class="modal-body">
                                                                         Are you sure you want to delete User  <strong th:text="${user.username}"></strong>?
                                                                     </div>
                                                                     <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                                                                         <button type="submit" class="btn btn-danger">Delete</button>
                                                                     </div>
                                                                 </form>
                                                             </div>
                                                         </div>
                                                     </div>
+
                                                 </td>
                                             </tr>
 

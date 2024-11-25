@@ -15,5 +15,8 @@ public interface IParticipant {
    List<AppUser> getAllWaiting_list();
    List<Event>  getMyEvents(AppUser appUser);
  List<Event>  getMyWaitingEvents(AppUser appUser);
+ void deleteUser(AppUser appUser);
+ AppUser findUserById(String id);
+
 
 }

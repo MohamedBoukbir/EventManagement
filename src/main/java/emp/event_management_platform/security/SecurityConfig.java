@@ -27,7 +27,7 @@ public class SecurityConfig {
         httpSecurity.authorizeHttpRequests().requestMatchers("/payment/**").hasRole("USER");
         httpSecurity.authorizeHttpRequests().requestMatchers("/admin/**").hasRole("ADMIN"); // autorizer les user qunat un role ADMIN
         httpSecurity.authorizeHttpRequests().anyRequest().authenticated();  // tous les requetes nisisite une autentification
-        httpSecurity.exceptionHandling().accessDeniedPage("/notAuthenticated");
+        httpSecurity.exceptionHandling().accessDeniedPage("/403");
         httpSecurity.userDetailsService(userDetailService);
         return httpSecurity.build();
     }

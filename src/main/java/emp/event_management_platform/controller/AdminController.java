@@ -15,6 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -31,6 +33,9 @@ public class AdminController {
     public String getAllEvents(Model model) {
         AppUser user = participant.getUserAuth();
         List<Event> events = iEvent.getAll();
+        for (Event event : events) {
+            System.out.println(event.getId());
+        }
         model.addAttribute("events", events);
         model.addAttribute("user", user);
         return "/events/listEvents";
@@ -73,11 +78,12 @@ public class AdminController {
         return "redirect:/admin/event/getAll";
     }
 
-    @GetMapping("/admin/event/delete")
-    public String deleteEvent(@RequestParam(name = "id") Long id, Model model) {
+    @PostMapping("/admin/event/delete")
+    public String deleteEvent(@RequestParam(name = "id") Long id, Model model, RedirectAttributes redirectAttributes) {
         Event event = iEvent.getEventById(id);
 
         iEvent.deleteEvent(event);
+        redirectAttributes.addFlashAttribute("successMessage", "Event successfully deleted!");
         return "redirect:/admin/event/getAll";
     }
 
@@ -87,12 +93,19 @@ public class AdminController {
 
         System.out.println(users.size());
         for (AppUser user : users) {
-            System.out.println(user.getUsername());
+            System.out.println(user.getId());
         }
         model.addAttribute("users", users);
         return "/admin/users";
     }
 
+    @PostMapping("/admin/user/delete")
+    public String deleteUser(@RequestParam(name = "id") Long id, Model model, RedirectAttributes redirectAttributes) {
+        AppUser appUser =participant.findUserById(String.valueOf(id));
+        participant.deleteUser(appUser);
+        redirectAttributes.addFlashAttribute("successMessage", "User successfully deleted!");
+        return "redirect:/admin/users";
+    }
     @GetMapping("/admin/participants")
     public String getAllParticipants(Model model) {
         List<AppUser> participants = participant.getAllParticipants();

@@ -1,5 +1,4 @@
 package emp.event_management_platform.controller;
-import emp.event_management_platform.entities.Event;
 import emp.event_management_platform.service.Accountservice;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -17,11 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @AllArgsConstructor
-public class SecurityController {
+public class SecurityController  {
     private Accountservice accountservice;
-    @GetMapping("/notAuthenticated")
-    public String  notAuthenticated() {
-        return "notAuthenticated";
+    @GetMapping("/403")
+    public String  err403() {
+        return "error-403";
     }
 
     @GetMapping("login")

@@ -37,7 +37,6 @@
                             <div class="card">
                                 <div class="card-header">
                                     <h4 class="card-title">All Waiting Users List  </h4>
-                                    <a th:href="@{/admin/event/add}"   class="btn btn-primary">+ Add new</a>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -47,7 +46,6 @@
 
                                                 <th>Username</th>
                                                 <th>EMail</th>
-                                                <th>Actions</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -56,34 +54,7 @@
                                                 <td th:text="${waiting_user.email}"></td>
 
                                                 <td>
-                                                    <a th:href="@{/admin/event/edit(id=${waiting_user.id})}" class="btn btn-sm btn-primary"><i class="fas fa-pen"></i></a>
-                                                    <a href="javascript:void(0);" class="btn btn-sm btn-danger"  data-bs-toggle="modal" th:data-bs-target="'#deleteModal'+ ${waiting_user.id }">
-                                                        <i class="fas fa-trash"></i>
-                                                    </a>
 
-
-                                                    <!-- Modal -->
-                                                    <div class="modal fade"  th:id="'deleteModal' + ${waiting_user.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabell" aria-hidden="true">
-                                                        <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                                <form th:action="@{/admin/event/delete(id=${waiting_user.id})}" method="POST">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title" th:id="'deleteModalLabel' + ${waiting_user.id}" >Confirm Delete</h5>
-                                                                        <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">
-                                                                            <i class="fas fa-trash"></i>
-                                                                        </button>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                        Are you sure you want to delete User  <strong th:text="${waiting_user.username}"></strong>?
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                                                        <button type="submit" class="btn btn-danger">Delete</button>
-                                                                    </div>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                    </div>
                                                 </td>
                                             </tr>
 

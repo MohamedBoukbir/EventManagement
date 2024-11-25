@@ -13,7 +13,6 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     @Query("SELECT DISTINCT w FROM Event e JOIN e.waitinglist w")
     List<AppUser> findAllWaitinglist();
 
-    // Méthode pour récupérer les événements d'un utilisateur donné
     List<Event> findByParticipantsContains(AppUser user);
     List<Event> findByWaitinglistContains(AppUser user);
 }
