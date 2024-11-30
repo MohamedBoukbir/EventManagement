@@ -10,6 +10,7 @@ public interface IParticipant {
    String cancelRegistration(AppUser appuser,Event event);
    AppUser getUserAuth();
    String  registerWaitingForEvent(AppUser appUser, Event event);
+   String cancelFromWaitingEvent(AppUser user, Event event);
    List<AppUser> getAllUsers();
    List<AppUser> getAllParticipants();
    List<AppUser> getAllWaiting_list();

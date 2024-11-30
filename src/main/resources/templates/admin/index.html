@@ -78,6 +78,7 @@
                     <th>Date</th>
                     <th>Type</th>
                     <th>Capacity</th>
+                    <th>Rate</th>
                     <th>Actions</th>
                   </tr>
                   </thead>
@@ -89,6 +90,11 @@
                     <td th:text="${upcomingEvent.date}"></td>
                     <td th:text="${upcomingEvent.type}"></td>
                     <td th:text="${upcomingEvent.capacity}"></td>
+                    <td>
+                      <i th:each="star : ${#numbers.sequence(1, 5)}"
+                         th:classappend="${star <= T(java.lang.Math).round(upcomingEvent.averageRating) ? 'fa fa-star text-warning' : 'fa fa-star'}">
+                      </i>
+                    </td>
                     <td>
                       <a th:href="@{/admin/event/edit(id=${upcomingEvent.id})}" class="btn btn-sm btn-primary"><i class="fas fa-pen"></i></a>
                       <a href="javascript:void(0)" data-toggle="modal" th:data-target="'#delete-modal'+${upcomingEvent.id}" class="btn btn-sm btn-danger">

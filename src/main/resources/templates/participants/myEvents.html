@@ -62,6 +62,20 @@
                                                     <li class="list-group-item px-0 d-flex justify-content-between">
                                                         <span class="mb-0">Price :</span><strong th:text="${event.price } +' $'"></strong></li>
                                                 </ul>
+                                                <div class="ratings">
+                                                    <div>
+                                                        <i th:each="star : ${#numbers.sequence(1, 5)}"
+                                                           th:classappend="${star <= T(java.lang.Math).round(event.averageRating) ? 'fa fa-star text-warning' : 'fa fa-star'}">
+                                                        </i>
+                                                    </div>
+                                                    <div>
+                                                        <span th:text="'Rating: ' + ${T(java.lang.Math).round(event.averageRating)} + '/5'"></span>
+                                                    </div>
+                                                </div>
+                                                <!-- Bouton pour ouvrir le modal -->
+                                                <a href="javascript:void(0)" data-toggle="modal"  class="btn btn-info  btn-rounded mt-3"  th:data-target="'#ratingModal-'+${event.id}"  >
+                                                    Rate
+                                                </a>
                                                 <a class="btn btn-outline-warning btn-rounded mt-3 px-4"
                                                    th:if="${event.participants.contains(user)}"
                                                    th:href="@{/user/register/event(id=${event.id})}">
@@ -69,11 +83,49 @@
                                                 <a class="btn btn-outline-primary btn-rounded mt-3 px-4"
                                                    th:if="${!event.participants.contains(user) && event.participants.size() < event.capacity}"
                                                    th:href="@{/user/register/event(id=${event.id})}">
-                                                    Register</a>
+                                                    Join</a>
                                                 <a class="btn btn-outline-success btn-rounded mt-3 px-4"
                                                    th:if="${!event.participants.contains(user) && !event.waitinglist.contains(user) && event.participants.size() >= event.capacity}"
                                                    th:href="@{/user/waiting/event(id=${event.id})}">
-                                                    Waiting List</a>
+                                                    Waitlist</a>
+                                                <a class="btn btn-outline-warning btn-rounded mt-3 px-4"
+                                                   th:if="${event.waitinglist.contains(user)}"
+                                                   th:href="@{/user/waiting/event(id=${event.id})}">
+                                                    Leave Waitlist </a>
+                                                <!-- Modals -->
+                                                <div>
+                                                    <div class="modal fade" th:id="'ratingModal-' + ${event.id}" tabindex="-1" aria-labelledby="ratingModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" th:text="'Rate ' + ${event.title}" id="ratingModalLabel"></h5>
+                                                                    <button type="button" class="btn btn-close" data-dismiss="modal" aria-label="Close">
+                                                                        <i class="fas fa-times"></i>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <form th:action="@{/user/events/rate}" method="POST">
+                                                                        <input type="hidden" name="id" th:value="${event.id}" />
+                                                                        <div class="mb-3">
+                                                                            <label for="rating" class="form-label" >Select Rating: </label>
+                                                                            <select name="rating" id="rating" class="form-select" required>
+                                                                                <option value="1">1 - Poor</option>
+                                                                                <option value="2">2 - Fair</option>
+                                                                                <option value="3">3 - Good</option>
+                                                                                <option value="4">4 - Very Good</option>
+                                                                                <option value="5">5 - Excellent</option>
+                                                                            </select>
+                                                                        </div>
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                                        <button type="submit" class="btn btn-success">Submit</button>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--                                end -->
+
                                             </div>
                                         </div>
                                     </div>
@@ -105,6 +157,20 @@
                                                     <li class="list-group-item px-0 d-flex justify-content-between">
                                                         <span class="mb-0">Price :</span><strong th:text="${waitingevent.price } +' $'"></strong></li>
                                                 </ul>
+                                                <div class="ratings">
+                                                    <div>
+                                                        <i th:each="star : ${#numbers.sequence(1, 5)}"
+                                                           th:classappend="${star <= T(java.lang.Math).round(waitingevent.averageRating) ? 'fa fa-star text-warning' : 'fa fa-star'}">
+                                                        </i>
+                                                    </div>
+                                                    <div>
+                                                        <span th:text="'Rating: ' + ${T(java.lang.Math).round(waitingevent.averageRating)} + '/5'"></span>
+                                                    </div>
+                                                </div>
+                                                <!-- Bouton pour ouvrir le modal -->
+                                                <a href="javascript:void(0)" data-toggle="modal"  class="btn btn-info  btn-rounded mt-3"  th:data-target="'#ratingModal-'+${waitingevent.id}"  >
+                                                    Rate
+                                                </a>
                                                 <a class="btn btn-outline-warning btn-rounded mt-3 px-4"
                                                    th:if="${waitingevent.participants.contains(user)}"
                                                    th:href="@{/user/register/event(id=${waitingevent.id})}">
@@ -112,11 +178,49 @@
                                                 <a class="btn btn-outline-primary btn-rounded mt-3 px-4"
                                                    th:if="${!waitingevent.participants.contains(user) && waitingevent.participants.size() < waitingevent.capacity}"
                                                    th:href="@{/user/register/event(id=${waitingevent.id})}">
-                                                    Register</a>
+                                                    Join</a>
                                                 <a class="btn btn-outline-success btn-rounded mt-3 px-4"
                                                    th:if="${!waitingevent.participants.contains(user) && !waitingevent.waitinglist.contains(user) && waitingevent.participants.size() >= waitingevent.capacity}"
                                                    th:href="@{/user/waiting/event(id=${waitingevent.id})}">
-                                                    Waiting List</a>
+                                                    Waitlist</a>
+                                                <a class="btn btn-outline-warning btn-rounded mt-3 px-4"
+                                                   th:if="${waitingevent.waitinglist.contains(user)}"
+                                                   th:href="@{/user/waiting/event(id=${waitingevent.id})}">
+                                                    Leave Waitlist </a>
+
+                                                <!-- Modals -->
+                                                <div>
+                                                    <div class="modal fade" th:id="'ratingModal-' + ${waitingevent.id}" tabindex="-1" aria-labelledby="rating1ModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" th:text="'Rate ' + ${waitingevent.title}" id="rating1ModalLabel"></h5>
+                                                                    <button type="button" class="btn btn-close" data-dismiss="modal" aria-label="Close">
+                                                                        <i class="fas fa-times"></i>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <form th:action="@{/user/events/rate}" method="POST">
+                                                                        <input type="hidden" name="id" th:value="${waitingevent.id}" />
+                                                                        <div class="mb-3">
+                                                                            <label for="rating" class="form-label" >Select Rating: </label>
+                                                                            <select name="rating" id="rating" class="form-select" required>
+                                                                                <option value="1">1 - Poor</option>
+                                                                                <option value="2">2 - Fair</option>
+                                                                                <option value="3">3 - Good</option>
+                                                                                <option value="4">4 - Very Good</option>
+                                                                                <option value="5">5 - Excellent</option>
+                                                                            </select>
+                                                                        </div>
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                                        <button type="submit" class="btn btn-success">Submit</button>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--                                end -->
                                             </div>
                                         </div>
                                     </div>

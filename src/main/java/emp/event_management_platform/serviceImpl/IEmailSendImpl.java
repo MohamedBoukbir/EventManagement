@@ -13,6 +13,7 @@ public class IEmailSendImpl implements IEmailSend {
     @Override
     public void sendEmail(String to, String subject, String body) {
      SimpleMailMessage message = new SimpleMailMessage();
+     System.out.println("Sending email form send methode");
      message.setTo(to);
      message.setSubject(subject);
      message.setText(body);

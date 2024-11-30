@@ -66,6 +66,8 @@ public class AdminController {
         return "/events/editevent";
     }
 
+
+
     @PostMapping("/admin/event/update/{id}")
     public String updateEvent(@PathVariable("id") Long id,@Valid Event event, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) return "/events/editevent";
@@ -141,6 +143,48 @@ public class AdminController {
         model.addAttribute("users", participant.getAllUsers().size());
         model.addAttribute("participants", participant.getAllParticipants().size());
         return "/admin/index";
+    }
+
+
+
+    @GetMapping("/admin/profile")
+    public String profile(Model model) {
+        AppUser  user = participant.getUserAuth();
+        model.addAttribute("user", user);
+        return "/admin/profile";
+    }
+
+    @PostMapping("/admin/update/profile")
+    public String updateprofile(@Valid AppUser user,
+                                @RequestParam(name = "current") String current,
+                                @RequestParam(name = "password_confirmation") String password_confirmation,
+                                BindingResult bindingResult,
+                                RedirectAttributes redirectAttributes) {
+        // Vérification des erreurs de validation
+        if (bindingResult.hasErrors()) {
+            System.out.println("dakchi kayn");
+            return "/admin/profile";
+        }
+        System.out.println(current);
+
+        // Vérification du mot de passe actuel
+//        if (!userService.isCurrentPasswordValid(user, current)) {
+//            bindingResult.rejectValue("current", "error.user", "Current password is incorrect.");
+//            return "/admin/profile";
+//        }
+
+        // Vérification des mots de passe
+//        if (!user.getPassword().equals(password_confirmation)) {
+//            bindingResult.rejectValue("password_confirmation", "error.user", "Passwords do not match.");
+//            return "/admin/profile";
+//        }
+
+        // Mise à jour de l'utilisateur
+//        userService.updateUser(user);
+
+        // Message de confirmation
+        redirectAttributes.addFlashAttribute("success", "Profile updated successfully.");
+        return "redirect:/admin/profile";
     }
 
 }

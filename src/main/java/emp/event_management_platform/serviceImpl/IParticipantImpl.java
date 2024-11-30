@@ -86,4 +86,12 @@ public class IParticipantImpl implements IParticipant {
         return "Your event has been cancelled: true";
 
     }
+    @Override
+    public String cancelFromWaitingEvent(AppUser user, Event event) {
+        event.getWaitinglist().remove(user);
+        user.getWaitingEvents().remove(event);
+        return "Your event has been cancelled: true";
+
+    }
+
 }

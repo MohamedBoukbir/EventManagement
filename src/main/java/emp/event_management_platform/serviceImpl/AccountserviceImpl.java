@@ -22,13 +22,18 @@ public class AccountserviceImpl implements Accountservice {
     private AppRoleRepository appRoleRepository;
     private PasswordEncoder passwordEncoder;
     @Override
-    public AppUser addNewUser(String username, String password, String email, String confirmpassword) {
+    public AppUser addNewUser(String username, String password, String firstname, String lastname, String address, String country, String gender, String email, String confirmpassword) {
        AppUser appuser = appUserRepository.findByUsername(username);
        if(appuser !=null) throw new RuntimeException("this user already exist");
        if (!password.equals(confirmpassword)) throw new RuntimeException("Password not match");
        appuser=AppUser.builder()
                .username(username)
                .password(passwordEncoder.encode(password))
+               .firstname(firstname)
+               .lastname(lastname)
+               .address(address)
+               .country(country)
+               .gender(gender)
                .email(email)
                .roles(new ArrayList<>())
                .payments(new ArrayList<>())

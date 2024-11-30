@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>EventManagement</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap-select.min.css}">
     <link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/logo.jpg}">
 </head>
 <body class="h-100 " >
@@ -17,7 +18,7 @@
                         <div class="col-xl-12">
                             <div class="auth-form">
                                 <h4 class="text-center mb-4">Sign up your account</h4>
-                                <form th:action="@{/register}" method="post">
+                                <form th:action="@{/signup}" method="post">
                                     <div class="form-group">
                                         <label for="username" class="form-label" ><strong>Username</strong></label>
                                         <input type="text" class="form-control" id="username" placeholder="Username" name="username" th:value="${user.username}">
@@ -30,6 +31,41 @@
                                         <span class="text-danger mt-1" th:errors="${user.email}" ></span>
                                         <span class="text-danger mt-1"  th:if="${emailError}" th:text="${emailError}" ></span>
                                     </div>
+                                    <div class="form-group">
+                                        <label for="firstname" class="form-label" ><strong>First Name</strong></label>
+                                        <input type="text" class="form-control" placeholder="First Name" id="firstname"  name="firstname"  th:value="${user.firstname}">
+                                        <span class="text-danger mt-1" th:errors="${user.firstname}" ></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="lastname" class="form-label" ><strong>Last Name</strong></label>
+                                        <input type="text" class="form-control" placeholder="Last Name" id="lastname"  name="lastname"  th:value="${user.lastname}">
+                                        <span class="text-danger mt-1" th:errors="${user.lastname}" ></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="address" class="form-label" ><strong>Address</strong></label>
+                                        <input type="text" class="form-control" placeholder="Address" id="address"  name="address"  th:value="${user.address}">
+                                        <span class="text-danger mt-1" th:errors="${user.address}" ></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="country" class="form-label" ><strong>Country</strong></label>
+                                        <input type="text" class="form-control" placeholder="Country" id="country"  name="country"  th:value="${user.country}">
+                                        <span class="text-danger mt-1" th:errors="${user.country}" ></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="gender" class="form-label"><strong>Gender</strong></label>
+                                        <select class="form-control" id="gender" name="gender" >
+                                            <!-- Option par défaut -->
+                                            <option value="" th:if="${user.gender == null}" disabled selected>Select Gender</option>
+
+                                            <!-- Options avec sélection conditionnelle -->
+                                            <option value="Male" th:selected="${user.gender == 'Male'}">Male</option>
+                                            <option value="Female" th:selected="${user.gender == 'Female'}">Female</option>
+                                        </select>
+
+                                        <!-- Affichage des erreurs si présent -->
+                                        <span class="text-danger mt-1"  th:errors="${user.gender}"></span>
+                                    </div>
+
                                     <div class="form-group">
                                         <label for="password" class="form-label"><strong>Password</strong></label>
                                         <input type="password" class="form-control" id="password" placeholder="Password" name="password"  th:value="${user.password}" >

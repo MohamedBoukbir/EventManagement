@@ -15,14 +15,14 @@ public class EventManagementPlatformApplication {
         SpringApplication.run(EventManagementPlatformApplication.class, args);
     }
 
-    //@Bean
+   // @Bean
     CommandLineRunner commandLineRunnerUserDetails(Accountservice accountservice){
         return args -> {
             accountservice.addNewRole("USER");
             accountservice.addNewRole("ADMIN");
-            accountservice.addNewUser("user1","1234","user1@gmail.com","1234");
-            accountservice.addNewUser("user2","1234","user2@gmail.com","1234");
-            accountservice.addNewUser("admin","1234","admin@gmail.com","1234");
+            accountservice.addNewUser("user1","1234","mohamed","razi","kenitra","Morocco","Male","user1@gmail.com","1234");
+            accountservice.addNewUser("user2","1234","mohamed","razi","kenitra","Morocco","Male","user2@gmail.com","1234");
+            accountservice.addNewUser("admin","1234","mohamed","razi","kenitra","Morocco","Male","admin@gmail.com","1234");
             accountservice.addRoleToUser("admin","ADMIN");
 //            accountservice.addRoleToUser("admin","USER");
             accountservice.addRoleToUser("user1","USER");

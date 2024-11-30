@@ -2,6 +2,7 @@ package emp.event_management_platform.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,8 +21,18 @@ public class AppUser {
     @NotEmpty
     private  String username;
     @NotEmpty
-    private  String password;
+    private  String firstname;
     @NotEmpty
+    private  String lastname;
+    @NotNull
+    private  String address;
+    @NotNull
+    private  String country;
+    @NotNull
+    private  String gender;
+
+    private  String password;
+    @NotNull
     @Column(unique = true)
     private String email;
     @ManyToMany(fetch = FetchType.EAGER)

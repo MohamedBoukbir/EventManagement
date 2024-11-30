@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{Dashboard.html}">
+
+
+<body>
+<div layout:fragment="content">
+    <div class="content-body ">
+        <style>
+            .cardadmin{
+                word-wrap: break-word;
+                background-color: #fff;
+                background-clip: border-box;
+                border: 0 solid transparent;
+                border-radius: .25rem;
+                margin-bottom: 1.5rem;
+                box-shadow: 0 2px 6px 0 rgb(218 218 253 / 65%), 0 2px 6px 0 rgb(206 206 238 / 54%);
+                padding: 1rem;
+
+
+            }
+            .sizeCardImage {
+                max-height: 350px;
+            }
+            .sizeCardPersonal {
+                max-height: 370px;
+            }
+            .sizeCardPassword {
+                max-height: 280px;
+            }
+
+
+        </style>
+        <div class="container-fluid">
+            <div class="row page-titles mx-0">
+                <div class="col-sm-6 p-md-0">
+                    <div class="welcome-text">
+                        <h4>Update Profile</h4>
+                    </div>
+                </div>
+                <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:void(0);">Update Profile</a></li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xl-12 col-xxl-12 col-sm-12">
+                    <div class="card" >
+                        <div class="card-header">
+                            <h5 class="card-title">Basic Info</h5>
+                        </div>
+                        <div class="card-body">
+
+                            <form  method="post" th:action="@{/admin/update/profile}">
+                                <div class="main-body">
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <div class="card cardadmin sizeCardImage">
+                                                <div class="card-body">
+                                                    <div class="d-flex flex-column align-items-center text-center">
+                                                        <!-- Si aucune image n'est uploadée, afficher un avatar par défaut -->
+                                                        <img src="https://ui-avatars.com/api/?name=A" alt="Admin" class="rounded-circle p-1" style="width: 110px; height: 110px;">
+
+
+<!--                                                        <div class="form-group" style="margin-top: 10px;">-->
+<!--                                                            <label for="">Image profile</label>-->
+<!--                                                            <input type="file" name="image" id="id_image" class="form-control">-->
+<!--                                                        </div>-->
+                                                    </div>
+
+                                                    <hr class="my-4">
+                                                    <ul class="list-group list-group-flush">
+                                                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                                            <h6 style="color: #052659" class="mb-0">
+                                                                <i class="fa-solid fa-at"></i> Gmail :
+                                                            </h6>
+
+                                                            <span class="text-secondary" th:text="${user.email}"></span>
+                                                            <input name="email" id="email" type="email" class="form-control"  hidden th:value="${user.email}">
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-8">
+                                            <div class="card cardadmin sizeCardPersonal">
+                                                <div class="card-body">
+                                                    <div class="row mb-3">
+                                                        <div class="col-sm-3">
+                                                            <h6 class="mb-0" style="color: #052659">First Name</h6>
+                                                        </div>
+                                                        <div class="col-sm-9 text-secondary">
+                                                            <input name="firstname" id="firstname" type="text" class="form-control" th:value="${user.firstname}">
+                                                            <span class="text-danger mt-1"  th:errors="${user.firstname}" th:value="${user.firstname}"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-3">
+                                                        <div class="col-sm-3">
+                                                            <h6 class="mb-0" style="color: #052659">Last Name</h6>
+                                                        </div>
+                                                        <div class="col-sm-9 text-secondary">
+                                                            <input name="lastname" id="lastname" type="text" class="form-control" th:value="${user.lastname}">
+                                                            <span class="text-danger mt-1"  th:errors="${user.lastname}" th:value="${user.lastname}"></span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mb-3">
+                                                        <div class="col-sm-3">
+                                                            <h6 class="mb-0" style="color: #052659">Username</h6>
+                                                        </div>
+                                                        <div class="col-sm-9 text-secondary">
+                                                            <input name="username" id="username" type="text" class="form-control" th:value="${user.username}">
+                                                            <span class="text-danger mt-1"  th:errors="${user.username}"></span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mb-3">
+                                                        <div class="col-sm-3">
+                                                            <h6 class="mb-0" style="color: #052659">Address</h6>
+                                                        </div>
+                                                        <div class="col-sm-9 text-secondary">
+                                                            <input name="address" id="address" type="text" class="form-control" th:value="${user.address}">
+                                                            <span class="text-danger mt-1"  th:errors="${user.address}"></span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mb-3">
+                                                        <div class="col-sm-3">
+                                                            <h6 class="mb-0" style="color: #052659">Country</h6>
+                                                        </div>
+                                                        <div class="col-sm-9 text-secondary">
+                                                            <input name="country" id="country" type="text" class="form-control" th:value="${user.country}">
+                                                            <span class="text-danger mt-1"  th:errors="${user.country}"></span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mb-3">
+                                                        <div class="col-sm-3">
+                                                            <h6 class="mb-0" style="color: #052659">Gender</h6>
+                                                        </div>
+                                                        <div class="col-sm-9 text-secondary">
+                                                            <select class="form-control" id="gender" name="gender" >
+                                                                <!-- Option par défaut -->
+                                                                <option value="" th:if="${user.gender == null}" disabled selected>Select Gender</option>
+
+                                                                <!-- Options avec sélection conditionnelle -->
+                                                                <option value="Male" th:selected="${user.gender == 'Male'}">Male</option>
+                                                                <option value="Female" th:selected="${user.gender == 'Female'}">Female</option>
+                                                            </select>
+
+                                                            <!-- Affichage des erreurs si présent -->
+                                                            <span class="text-danger mt-1"  th:errors="${user.gender}"></span>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="card cardadmin sizeCardPassword">
+                                                <div class="card-body">
+
+                                                    <h3 style="color: #052659; font-size: large;">
+                                                        Password
+                                                    </h3>
+
+                                                    <div class="row mb-3">
+                                                        <div class="col-sm-3">
+                                                            <h6 class="mb-0" style="color: #052659;">Current</h6>
+                                                        </div>
+                                                        <div class="col-sm-9 text-secondary">
+                                                            <input name="current" id="current" type="password" class="form-control" >
+                                                            <span class="text-danger mt-1"  ></span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mb-3">
+                                                        <div class="col-sm-3">
+                                                            <h6 class="mb-0" style="color: #052659;">New</h6>
+                                                        </div>
+                                                        <div class="col-sm-9 text-secondary">
+                                                            <input name="password" id="password" type="password" class="form-control">
+                                                            <span class="text-danger mt-1"  th:errors="${user.password}"></span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mb-3">
+                                                        <div class="col-sm-3">
+                                                            <h6 class="mb-0" style="color: #052659;">Confirm</h6>
+                                                        </div>
+                                                        <div class="col-sm-9 text-secondary">
+                                                            <input name="password_confirmation" id="password_confirmation" type="password" class="form-control" >
+                                                            <span class="text-danger mt-1"  ></span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                                        <a type="reset" href="#" class="btn btn-light">Cancel</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+</div>
+
+</body>
+
+</html>

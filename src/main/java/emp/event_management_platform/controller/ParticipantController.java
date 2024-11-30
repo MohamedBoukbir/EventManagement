@@ -47,7 +47,7 @@ public class ParticipantController {
 
     if (event.getParticipants().contains(user)) {
          response = participant.cancelRegistration(user, event);
-//        sendNotification("Cancellation from Event", response.split(":")[0]);
+        sendNotification("Cancellation from Event", response.split(":")[0]);
         redirectAttributes.addFlashAttribute("message", response);
         return new RedirectView("/user/event/getAll");
     }else{
@@ -105,6 +105,7 @@ public class ParticipantController {
                 appPayment.setParticipant(user);
                 paymentService.createPayment(appPayment);
                 session.removeAttribute("eventId");
+                System.out.println("notification sent to mohamed ");
                 sendNotification("Participation in Event", response.split(":")[0]);
                 return "/payments/paymentSuccess";
             }
@@ -134,11 +135,14 @@ public class ParticipantController {
        String response;
         AppUser user = participant.getUserAuth();
         Event event = iEvent.getEventById(id);
-        if (!event.getWaitinglist().contains(user)) {
+        if (event.getWaitinglist().contains(user)) {
+           response =participant.cancelFromWaitingEvent( user, event);
+        }
+        else{
        response= participant.registerWaitingForEvent(user,event);
-//       sendNotification("Waiting list   Event", response.split(":")[0]);
+       sendNotification("Waiting list   Event", response.split(":")[0]);
         redirectAttributes.addFlashAttribute("message", response);
-        return new RedirectView("/user/event/getAll");}
+        }
         return new RedirectView("/user/event/getAll");
 
     }
@@ -152,6 +156,7 @@ public class ParticipantController {
         model.addAttribute("user", user);
         return "/participants/listEvents";
     }
+
 
     @GetMapping("/user/my/events")
     public String getMyEvents(Model model) {
@@ -176,6 +181,7 @@ public class ParticipantController {
        List<Event> upcomingEvents = iEvent.getAll().stream()
                .filter(event -> event.getDate().isAfter(today) && event.getDate().isBefore(nextMonth))
                .collect(Collectors.toList());
+       model.addAttribute("user", user);
        model.addAttribute("upcomingEvents",upcomingEvents);
        model.addAttribute("amount",amount);
        model.addAttribute("events", iEvent.getAll().size());

@@ -33,33 +33,44 @@ public class SecurityController  {
    return "register";
     }
 
-    @PostMapping("register")
+    @PostMapping("/signup")
     public String signUp(
             @Valid @ModelAttribute("user") AppUser user,
             @RequestParam("confirmPassword") String confirmPassword,
             BindingResult bindingResult,
             Model model) {
+
+        // Vérification des erreurs de validation
         if (bindingResult.hasErrors()) {
-            return "register";
+            return "register"; // Retourne au formulaire avec les erreurs
         }
+
+        // Vérifier si le nom d'utilisateur existe déjà
         if (accountservice.existsByUsername(user.getUsername())) {
             model.addAttribute("usernameError", "Username already taken");
             return "register";
         }
 
+        // Vérifier si l'email existe déjà
         if (accountservice.existsByEmail(user.getEmail())) {
             model.addAttribute("emailError", "Email already registered");
             return "register";
         }
 
+        // Vérifier si les mots de passe correspondent
         if (!user.getPassword().equals(confirmPassword)) {
             model.addAttribute("confirmPasswordError", "Passwords do not match");
             return "register";
         }
 
-       accountservice.addNewUser(user.getUsername(),user.getPassword(), user.getEmail(), confirmPassword);
+        // Ajouter le nouvel utilisateur
+        accountservice.addNewUser(user.getUsername(), user.getPassword(),
+                user.getFirstname(), user.getLastname(), user.getAddress(), user.getCountry(),
+                user.getGender(), user.getEmail(), confirmPassword);
 
+        // Ajouter le rôle USER à l'utilisateur
         accountservice.addRoleToUser(user.getUsername(), "USER");
+
         return "login"; // Redirige vers la page de connexion après succès
     }
 

@@ -46,4 +46,18 @@ public class Event {
 
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<AppPayment> payments;
+
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Rating> ratings;
+
+    public Double getAverageRating() {
+        if (ratings == null || ratings.isEmpty()) {
+            return 0.0; // Si aucune évaluation, retourner 0
+        }
+        return ratings.stream()
+                .mapToInt(Rating::getRating) // Récupérer toutes les évaluations
+                .average() // Calculer la moyenne
+                .orElse(0.0); // Retourner 0.0 si aucune moyenne n'est calculable
+    }
+
 }

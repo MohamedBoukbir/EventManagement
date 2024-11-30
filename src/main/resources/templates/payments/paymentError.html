@@ -1,18 +1,27 @@
-    <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{base.html}">
+<!DOCTYPE html>
+<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
-    <title> Paypal Integration </title>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/logo.jpg}">
+    <title>EventManagement</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
-<body>
-<div layout:fragment="content">
-    <h1 class="text-center mt-5  text-danger">  Payment Error </h1>
-          <p class="text-center mt-3 "> An error occurred during  the  payment.Please try again </p>
-        <div class="d-flex justify-content-center mt-5">
-            <a   href="/payment" class="btn btn-primary"> Back to Home  </a>
+<body class="h-100">
+<div class="authincation h-100">
+    <div class="container h-100">
+        <div class="row justify-content-center h-100 align-items-center">
+            <div class="col-md-5">
+                <div class="form-input-content text-center error-page">
+                    <h4> Payment Error</h4>
+                    <p>An error occurred during  the  payment.Please try again </p>
+                    <div>
+                        <a class="btn btn-primary" th:href="@{/}">Back to Home</a>
+                    </div>
+                </div>
+            </div>
         </div>
-
+    </div>
 </div>
 </body>
 </html>
